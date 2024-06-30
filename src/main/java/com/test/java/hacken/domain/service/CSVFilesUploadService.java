@@ -3,7 +3,6 @@ package com.test.java.hacken.domain.service;
 import com.opencsv.CSVReader;
 import com.test.java.hacken.domain.entites.GenericCSVFileEntity;
 import com.test.java.hacken.domain.repository.GenericCSVFileRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,9 +14,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Slf4j
 @Service
-public class CSVFilesService {
+public class CSVFilesUploadService {
+
     @Autowired
     private GenericCSVFileRepository genericCSVFileRepository;
 

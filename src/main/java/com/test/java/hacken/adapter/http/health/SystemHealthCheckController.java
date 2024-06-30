@@ -11,6 +11,5 @@ public class SystemHealthCheckController {
 
     @GetMapping("/public/healthcheck/live")
     public void systemHealthCheckCall(){
-
     }
 }
