@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/v1")
 public class CSVFilesUploadController {
@@ -13,13 +15,14 @@ public class CSVFilesUploadController {
         this.csvFilesUploadService = csvFilesUploadService;
     }
     @PostMapping(value = "/csv", consumes = {"multipart/form-data"})
-    public ResponseEntity<Integer> uploadCSVfiles(
+    public ResponseEntity<Long> uploadCSVfiles(
             @RequestPart("file")MultipartFile file
             ){
-        return ResponseEntity.ok(csvFilesUploadService.uploadCSVFiles(file));
+        try {
+            return ResponseEntity.ok(csvFilesUploadService.uploadCSVFiles(file));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
-
-//    @GetMapping
-//    public ResponseEntity<> searchCSVfile(){}
 
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -21,27 +22,12 @@ public class CSVFilesUploadService {
     @Autowired
     private GenericCSVFileRepository genericCSVFileRepository;
 
-    public Integer uploadCSVFiles(MultipartFile csvFile) {
-        List<GenericCSVFileEntity> records;
-        try (CSVReader reader = new CSVReader(new InputStreamReader(csvFile.getInputStream(), StandardCharsets.UTF_8))) {
-            String[] headers = reader.readNext();
-            records = new ArrayList<>();
-            String[] values;
-            while ((values = reader.readNext()) != null) {
-                Map<String, String> fields = new HashMap<>();
-                for (int i = 0; i < headers.length; i++) {
-                    fields.put(headers[i], values[i]);
-                }
-                GenericCSVFileEntity record = new GenericCSVFileEntity();
-                record.setFields(fields);
-                records.add(record);
-            }
-            genericCSVFileRepository.saveAll(records);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("Erro ao processar o arquivo CSV");
-        }
-        return records.size();
+    public Long uploadCSVFiles(MultipartFile file)  throws IOException {
+        String content = new String(file.getBytes());
+        GenericCSVFileEntity csvFile = new GenericCSVFileEntity();
+        csvFile.setName(file.getOriginalFilename());
+        csvFile.setContent(content);
+        genericCSVFileRepository.save(csvFile);
+        return csvFile.getId();
     }
-
 }
