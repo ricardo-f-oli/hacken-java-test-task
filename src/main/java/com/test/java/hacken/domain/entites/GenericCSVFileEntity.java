@@ -13,11 +13,31 @@ public class GenericCSVFileEntity {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
+        private String name;
+        private String content;
 
-        @ElementCollection
-        @MapKeyColumn(name = "field_name")
-        @Column(name = "field_value")
-        @CollectionTable(name = "generic_record_fields", joinColumns = @JoinColumn(name = "record_id"))
-        private Map<String, String> fields;
+        // Getters e Setters
+        public Long getId() {
+                return id;
+        }
 
+        public void setId(Long id) {
+                this.id = id;
+        }
+
+        public String getName() {
+                return name;
+        }
+
+        public void setName(String name) {
+                this.name = name;
+        }
+
+        public String getContent() {
+                return content;
+        }
+
+        public void setContent(String content) {
+                this.content = content;
+        }
 }
